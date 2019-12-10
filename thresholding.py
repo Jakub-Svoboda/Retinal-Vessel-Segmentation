@@ -6,7 +6,7 @@ import os
 import cv2
 
 def error(gt, result):
-	# accard similarity: which is the ratio between the intersection 
+	# Jaccard similarity: which is the ratio between the intersection 
 	# and union of the segmented results and the ground truth
 	# J= (A intersect B) / (A union B) 
 	gt = cv2.cvtColor(gt, cv2.COLOR_BGR2GRAY)
@@ -33,10 +33,7 @@ def main(args=None):
 
 	te = me = ge = tre = 0
 	for idx, f in enumerate(files):
-		#print(f)
 		image = cv2.imread(f)
-		#print(labels[idx])
-		#print(labels)
 		label = cv2.imread(labels[idx])
 		grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 		_, threshold = cv2.threshold(grayscale, 128,255,cv2.THRESH_BINARY_INV)
@@ -64,7 +61,7 @@ def main(args=None):
 				label2 = cv2.cvtColor(label, cv2.COLOR_BGR2GRAY)
 				_, label2 = cv2.threshold(label2, 128, 255,cv2.THRESH_BINARY)
 				tre += error(label, label2)
-				print("TH:", error(label, threshold), "  \tME:", error(label, mean), "  \tGA:", error(label, gaussian), "  \tGT:", error(label, label2))
+				print(idx, "TH:", error(label, threshold), "  \tME:", error(label, mean), "  \tGA:", error(label, gaussian), "  \tGT:", error(label, label2))
 				break
 			else:
 				print(k)
